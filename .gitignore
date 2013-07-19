@@ -1,0 +1,5 @@
+*.hg
+*.pyc
+*.swp
+*channel*
+*.DS_Store
