@@ -1,1 +1,0 @@
-/Users/giannaks/.vimrc
