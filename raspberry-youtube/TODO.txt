@@ -1,0 +1,12 @@
+chrome extention:
+	works on youtube only
+	if enabled asks you where you want to play the vid
+	the first time is installed lets you set the address port of the pi
+	how to sync with the video playing locally?
+
+
+server:
+	allow get access from 80 to see the title of the video playing
+	first start the new video and then kill the old
+	allow playlists
+	
