@@ -14,7 +14,7 @@
   ],
   "background": {
     "scripts": ["bootstrap.js"],
-    "persistent": false
+    "persistent": true
   },
   "page_action": {
     "default_icon": "logo.png"
