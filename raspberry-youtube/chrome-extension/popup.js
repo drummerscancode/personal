@@ -8,9 +8,10 @@
  *
  * @type {string}
  */
-var QUERY = 'kittens';
+var QUERY = 'puppies';
 
 var kittenGenerator = {
+
   /**
    * Flickr URL that will give us lots and lots of whatever we're looking for.
    *
@@ -76,6 +77,7 @@ var kittenGenerator = {
         "_s.jpg";
   }
 };
+
 
 // Run our kitten generation script as soon as the document's DOM is ready.
 document.addEventListener('DOMContentLoaded', function () {
