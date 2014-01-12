@@ -1,6 +1,6 @@
 // when the extension is first installed
 chrome.runtime.onInstalled.addListener(function(details) {
-    chrome.tabs.create({url: 'settings.html', active: true}, function(tab){ document.sub});
+    chrome.tabs.create({url: 'initSettings.html', active: true}, function(tab){ document.sub});
 });
 
 // Listen for any changes to the URL of any tab.
@@ -14,16 +14,40 @@ chrome.tabs.onUpdated.addListener(function(id, info, tab){
         return;
     }
 
-    if ( !localStorage['chrome-to-pi'] ) {
-        // it's not yet setup
-        // chrome.pageAction.setPopup({tabId: tab.id, popup: 'popup.html'});
+    if ( !(localStorage.raspIp && localStorage.raspPort) ) {
+        // it's not yet setup - f** dat shit
+        // chrome.pageAction.setPopup({tabId: tab.id, popup: 'reSettings.html'});
     }
 
     // show the page action
     chrome.pageAction.show(tab.id);
 });
 
-var findPropertyFromString = function(url, key) {
+var searching_images = ['logo.png',
+                        'love.png'];
+var image_index = 1;
+var keep_switching_icon = true;
+
+function rotateIcon(tab) {   
+    if ( keep_switching_icon ) {
+        chrome.pageAction.setIcon({tabId: tab.id, path: searching_images[image_index]}, null);
+        image_index = (image_index + 1) % searching_images.length;
+        window.setTimeout(function() { rotateIcon(tab);}, 100);
+    }
+    else {
+        chrome.pageAction.setIcon({tabId: tab.id, path: searching_images[0]}, null);
+    }
+}
+
+
+// will be called if no popup attached
+chrome.pageAction.onClicked.addListener(function(tab) {
+    sendVideo(tab);
+});
+
+// actual sending of the vid    
+function sendVideo(tab) {
+    var findPropertyFromString = function(url, key) {
         var key = key + "=";
         var index = url.indexOf('?');
         var video_url = url.substring(index + 1);
@@ -32,29 +56,31 @@ var findPropertyFromString = function(url, key) {
         return video_url.split(key)[1];
     }
 
-chrome.pageAction.onClicked.addListener(function(tab) {
-    // chrome.pageAction.getPopup({tabId: tab.id}, function () {console.log('returned')});
     var raspIp = localStorage.raspIp;
     var raspPort = localStorage.raspPort;
-    if (!(raspIp && raspPort)) {
-        console.log('Please set it!');   
-        chrome.pageAction.setPopup({tabId: tab.id, popup: 'settings.html'});
-        return;
-    }
 
+    // TODO check again
     console.log(tab.url);
     var v_param = findPropertyFromString(tab.url, 'v');
     var req = new XMLHttpRequest();
     req.open("GET", 'http://' + raspIp + ':' + raspPort + '?v=' + v_param , true); // kww0WXcH74o
-    req.onload = function (e){
-        chrome.pageAction.setPopup({tabId: tab.id, popup: 'success.html'});
-        console.log('success');
-    }
+    // req.onload = function (e){
+    //     chrome.pageAction.setIcon({tabId: tab.id, path: 'love.png'}, null);
+    //     console.log('success');
+    // }
+    keep_switching_icon = true;
+    rotateIcon(tab);
+
+    req.onreadystatechange = function() {
+        if (req.readyState == 4) {
+            keep_switching_icon = false;
+            if ( req.status != 200 ) {
+                console.log('oupsie');
+            }
+            else {
+                console.log('alles guet');
+            }
+        };
+    }    
     req.send();
-
-    //chrome.tabs.executeScript(tab.id, {"file": "raspberry-to-pi.js"}, function(){console.log('video sent')});
-});
-
-
-
-
+}

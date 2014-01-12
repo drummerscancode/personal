@@ -1,5 +1,7 @@
+// the first time the extension is installed
+// opens in a new page
 document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('sendButton').addEventListener('click', submitSettings);
+    document.getElementById('saveButton').addEventListener('click', submitSettings);
 });
 
 function submitSettings (e) {
