@@ -1,7 +1,10 @@
 // when the extension is first installed
 chrome.runtime.onInstalled.addListener(function(details) {
     console.log('installed');
-    // localStorage["be_a_buzzkill"] = true;
+    if ( !localStorage['chrome-to-pi'] ) {
+        // it's not yet setup
+
+    } 
 });
 
 // Listen for any changes to the URL of any tab.
@@ -22,10 +25,25 @@ chrome.tabs.onUpdated.addListener(function(id, info, tab){
     chrome.pageAction.show(tab.id);
 });
 
-// show the popup when the user clicks on the page action.
+var findPropertyFromString = function(url, key) {
+        var key = key + "=";
+        var index = url.indexOf('?');
+        var video_url = url.substring(index + 1);
+
+        // TODO: for the time being there is no & in the url
+        return video_url.split(key)[1];
+    }
+
+
 chrome.pageAction.onClicked.addListener(function(tab) {
+    console.log(tab.url);
+    var v_param = findPropertyFromString(tab.url, 'v');
     var req = new XMLHttpRequest();
-    req.open("GET", 'http://192.168.1.10:8080?v=kww0WXcH74o', true);
+    req.open("GET", 'http://192.168.1.10:8080?v=' + v_param , true); // kww0WXcH74o
+    req.onload = function (e){
+        console.log('success');
+        document.body.appendChild('Success');
+    }
     req.send();
 
     //chrome.tabs.executeScript(tab.id, {"file": "raspberry-to-pi.js"}, function(){console.log('video sent')});
