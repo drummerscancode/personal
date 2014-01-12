@@ -1,8 +1,9 @@
 {
   "manifest_version": 2,
 
-  "name": "Youtube to Raspberry",
-  "description": "Send your videos to pi for playback",
+  "name": "YouTube to Raspberry",
+  "short_name": "YouTube<->Pi",
+  "description": "Send YouTube videos to RaspberryPi for playback.",
   "version": "0.1",
 
   "permissions": [
