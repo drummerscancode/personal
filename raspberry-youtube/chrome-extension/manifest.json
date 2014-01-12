@@ -8,8 +8,6 @@
   "permissions": [
       "tabs",
       "background",
-      "activeTab",
-      "https://secure.flickr.com/",
       "http://*/"
   ],
   "background": {
