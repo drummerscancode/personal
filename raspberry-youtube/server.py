@@ -6,11 +6,18 @@ import sys
 import os
 import signal
 
+"""
+	Usage: python server.py
+	Dependencies: 
+		youtube-dl (upgrade to the latest with $ youtube-dl -U)
+		omxplayer		
+"""
+
 class HelloResource(resource.Resource):
 	"""
 	mplayer -cookies -cookies-file /tmp/cookie.txt $(youtube-dl -g --cookies /tmp/cookie.txt "http://www.youtube.com/watch?v=kww0WXcH74o")
 	"""   
-	isLeaf = True # required don't know what it is
+	isLeaf = True # required - don't know what it is
 	previous = { # previous video
 		'yt_dl': {},
 		'player': {}
@@ -33,7 +40,7 @@ class HelloResource(resource.Resource):
 	
 		request.setHeader("content-type", "text/plain")
 
-		# fine the new video
+		# find the new video
 		yt_dl = subprocess.Popen(['youtube-dl', '-g', self.base_url + v_param], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 		(yt_url, err) = yt_dl.communicate()
 		if yt_dl.returncode != 0:
@@ -52,7 +59,7 @@ class HelloResource(resource.Resource):
 			os.killpg(self.previous['player'].pid, signal.SIGTERM)
 			print(self.previous['player'].poll())
 
-		# update the previous
+		# update with the current
 		self.previous['yt_dl'] = yt_dl
 		self.previous['player'] = player
 		
