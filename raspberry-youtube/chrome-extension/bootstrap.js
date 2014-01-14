@@ -1,4 +1,7 @@
-// when the extension is first installed
+
+/**
+ * Run when the extension is first installed
+ */
 chrome.runtime.onInstalled.addListener(function(details) {
     chrome.tabs.create({url: 'initSettings.html', active: true}, function(tab){ document.sub});
 });
