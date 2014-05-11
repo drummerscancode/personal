@@ -1,18 +1,21 @@
-# Local hosting from Mac
+# Local hosting from Mac with dynamic DND
 
-* Create an account in DynDns (or easydns etc)
-* Open a port on your router
-* Test with dummy_server.py
-* Follow http://carl.hoyer.ca/2012/05/02/updating-root-dns-dynamically-using-ddclient-on-osx.html with the conf file provided.
-Note: Launchpd does not work from tmux.
+* Port forwarding on your router
+* Test with the provided dummy\_server.py
+  canyouseeme.org
+* Create an account for dynamic dns - I choose no-ip since it's the (only?) with a free tier
+  DynDns: 25$ per year, free 2-week trial but requires credit card
+  EasyDns: supports authentication tokens instead of password
+* Use ddclient with the conf file provided: $ brew install ddclient and follow the instructions for launchctl (change conf file name).
+  I use the no-ip client as I don't like having the password in plain text on the conf.
+  (didn't find an option for auth token or ssh key)
 * Enjoy
 
 
 ## Security Considerations
-* Open a non-standard port on your router
-canyouseeme.org
+* (At least) open a non-standard port on your router
 * Whitelist certain IPs only.
-Very static: access from phone?
+  Very static: access from phone?
 * MAC filters work only for local network.
 
 External hosting more secure?
