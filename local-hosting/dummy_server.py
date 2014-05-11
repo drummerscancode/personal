@@ -7,14 +7,14 @@ import os
 import signal
 
 """
-    Usage: python server.py
-    Dependencies: 
-        youtube-dl (upgrade to the latest with $ youtube-dl -U)
-        omxplayer       
+Usage: python server.py
 """
-print 'welcome'
 
-class HelloResource(resource.Resource):
+port = 8080
+print 'welcome to dummy'
+
+
+class TestResource(resource.Resource):
     def __init__(self):
         print "created new index page"
         resource.Resource.__init__(self)
@@ -23,14 +23,14 @@ class HelloResource(resource.Resource):
         print 'inside get'  
         return "<html>INDEX PAGE</html>"
 
+
 class Main(resource.Resource):
     def getChild(self, name, request):
-        print "trying to get main"
-        return HelloResource()  
+        return TestResource()  
+
 
 root = Main()
 site = server.Site(root)
-reactor.listenTCP(8080, site)
+reactor.listenTCP(port, site)
 reactor.run()
-
 
