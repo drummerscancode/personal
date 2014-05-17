@@ -10,11 +10,3 @@ EasyDns: supports authentication tokens instead of password
 I used the no-ip client as I don't like having the password in plain text on the confif file.  
 (didn't find any option for auth token or ssh key)
 
-
-## Security Considerations
-* (At least) open a non-standard port on your router
-* Whitelist certain IPs only.  
-Very static: access from phone?
-* MAC filters work only for local network.
-
-External hosting more secure?
