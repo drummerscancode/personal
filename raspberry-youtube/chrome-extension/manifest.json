@@ -16,6 +16,6 @@
     "persistent": true
   },
   "page_action": {
-    "default_icon": "logo.png"
+    "default_icon": "assets/img/logo.png"
   }
 }
